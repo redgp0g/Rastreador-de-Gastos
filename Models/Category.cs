@@ -15,6 +15,6 @@ namespace Rastreador_de_Gastos.Models
 		public string Icon { get; set; } = "";
 
 		[Column(TypeName = "nvarchar(10)")]
-		public string Type { get; set; } = "Expense";
+		public string Type { get; set; } = "Despesa";
 	}
 }
