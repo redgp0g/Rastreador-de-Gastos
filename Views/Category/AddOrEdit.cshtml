@@ -1,7 +1,7 @@
 ﻿@model Rastreador_de_Gastos.Models.Category
 
 @{
-    ViewData["Title"] = "Cadastrar";
+    ViewData["PageTitle"] = Model.CategoryId == 0? "Criar uma nova categoria" : "Editar categoria";
 }
 
 <div class="row">
