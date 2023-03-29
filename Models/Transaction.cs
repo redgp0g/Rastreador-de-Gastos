@@ -7,9 +7,13 @@ namespace Rastreador_de_Gastos.Models
 	{
 		[Key] 
 		public int TransactionId { get; set; }
+
+		[Range(1, int.MaxValue,ErrorMessage = "Por favor, selecione uma categoria.")]
 		public int CategoryId { get; set; }
 		public Category? Category { get; set; }
-		public int Amount { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "A Quantidade deve ser maior do que zero.")]
+        public int Amount { get; set; }
 		[Column(TypeName = "nvarchar(75)")]
 		public string? Note { get; set; }
 		public DateTime Date { get; set; } = DateTime.Now;
