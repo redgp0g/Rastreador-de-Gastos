@@ -9,6 +9,8 @@ namespace Rastreador_de_Gastos.Models
 		public int TransactionId { get; set; }
 
 		[Range(1, int.MaxValue,ErrorMessage = "Por favor, selecione uma categoria.")]
+
+		[Display(Name = "Categoria")]
 		public int CategoryId { get; set; }
 		public Category? Category { get; set; }
 
