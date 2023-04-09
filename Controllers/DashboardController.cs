@@ -60,7 +60,7 @@ namespace Rastreador_de_Gastos.Controllers
 				.GroupBy(j => j.Date)
 				.Select(k => new SplineChartData()
 				{
-					day = k.First().Date.ToString("dd-MMM"),
+					day = k.First().Date.ToString("dd-MM"),
 					income = k.Sum(l => l.Amount)
 				})
 				.ToList();
@@ -71,14 +71,14 @@ namespace Rastreador_de_Gastos.Controllers
 				.GroupBy(j => j.Date)
 				.Select(k => new SplineChartData()
 				{
-					day = k.First().Date.ToString("dd-MMM"),
+					day = k.First().Date.ToString("dd-MM"),
 					expense = k.Sum(l => l.Amount)
 				})
 				.ToList();
 
 			//Combine Income & Expense
 			string[] Last7Days = Enumerable.Range(0,7)
-				.Select(i => StartDate.AddDays(i).ToString("dd-MMM"))
+				.Select(i => StartDate.AddDays(i).ToString("dd-MM"))
 				.ToArray();
 
 			ViewBag.SplineChartData = from day in Last7Days
