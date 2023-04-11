@@ -80,7 +80,7 @@ namespace Rastreador_de_Gastos.Controllers
         public void PopulateCategories()
         {
             var CategoryCollection = _context.Category.ToList();
-            Category DefaultCategory = new Category() { CategoryId = 0, Title = "Escolhe uma categoria" };
+            Category DefaultCategory = new() { CategoryId = 0, Title = "Escolhe uma categoria" };
             CategoryCollection.Insert(0, DefaultCategory);
             ViewBag.Categories = CategoryCollection;
         }

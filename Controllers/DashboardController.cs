@@ -15,12 +15,11 @@ namespace Rastreador_de_Gastos.Controllers
         public async Task<ActionResult> Index()
 		{
 			//Last 7 Days
-			DateTime StartDate = DateTime.Now.AddDays(-6);
-			DateTime EndDate = DateTime.Today;	
+			DateTime dataInicial = _context.Transaction.Min(x => x.Date);
+			DateTime dataFinal = _context.Transaction.Max(x => x.Date);	
 
 			List<Transaction> SelectedTransactions = await _context.Transaction
 				.Include(x => x.Category)
-				.Where(y => y.Date >= StartDate && y.Date <= EndDate)
 				.ToListAsync();
 			//Total Income
 			int TotalIncome = SelectedTransactions
@@ -77,18 +76,21 @@ namespace Rastreador_de_Gastos.Controllers
 				.ToList();
 
 			//Combine Income & Expense
-			string[] Last7Days = Enumerable.Range(0,7)
-				.Select(i => StartDate.AddDays(i).ToString("dd-MM"))
-				.ToArray();
+			List<string> periodo = new(); // lista de datas
 
-			ViewBag.SplineChartData = from day in Last7Days
+			for (DateTime data = dataInicial; data <= dataFinal; data = data.AddDays(1))
+			{
+				periodo.Add(data.ToString("dd-MM")); // adiciona a data atual à lista
+			}
+
+			ViewBag.SplineChartData = from day in periodo
 									  join income in IncomeSummary on day equals income.day into dayIncomeJoined
 									  from income in dayIncomeJoined.DefaultIfEmpty()
 									  join expense in ExpenseSummary on day equals expense.day into expenseJoined
 									  from expense in expenseJoined.DefaultIfEmpty()
 									  select new
 									  {
-										  day = day,
+										  day,
 										  income = income == null ? 0 : income.income,
 										  expense = expense == null ? 0 : expense.expense,
 									  };
